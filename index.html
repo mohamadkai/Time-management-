@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورشة إدارة الوقت - شغل احترافي</title>
+    <title>ورشة إدارة الوقت - نسخة كلاسيكية</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap');
         
@@ -15,8 +15,8 @@
 
         body {
             font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            color: #F4F4F9;
+            background-color: #F5F5DC; /* Classic Beige */
+            color: #5D4037; /* Dark Sepia/Brown */
             overflow: hidden;
         }
 
@@ -35,8 +35,7 @@
             top: 0;
             left: 0;
             opacity: 0;
-            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-            transform: translateY(20px);
+            transition: opacity 0.8s ease-in-out;
         }
 
         .slide.active {
@@ -45,7 +44,6 @@
             justify-content: center;
             align-items: center;
             opacity: 1;
-            transform: translateY(0);
         }
 
         .slide h1 {
@@ -53,8 +51,7 @@
             font-weight: 800;
             text-align: center;
             margin-bottom: 30px;
-            color: #FFFFFF;
-            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+            color: #3A3B3C; /* Charcoal */
         }
 
         .slide h2 {
@@ -62,14 +59,14 @@
             font-weight: 700;
             text-align: center;
             margin-bottom: 40px;
-            color: #90EE90; /* Light Green */
+            color: #556B2F; /* Dark Olive Green */
         }
         
         .slide h3 {
             font-size: 2.2rem;
             font-weight: 600;
             margin-bottom: 20px;
-            color: #00FFFF; /* Cyan */
+            color: #C0A062; /* Muted Gold */
         }
 
         .slide p, .slide li {
@@ -77,13 +74,13 @@
             line-height: 1.8;
             margin-bottom: 15px;
             text-align: center;
-            color: #E0E0E0; /* Light Grey */
+            color: #5D4037;
         }
         
         .movie-quote {
             font-size: 1.2rem;
             font-style: italic;
-            color: #90EE90;
+            color: #556B2F;
             margin-top: -20px;
             margin-bottom: 30px;
         }
@@ -98,11 +95,10 @@
         }
 
         .problem-box {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
             padding: 25px;
-            border: 1px solid rgba(0, 255, 255, 0.3);
+            border: 1px solid #DCDCDC;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             flex: 1 1 280px;
             max-width: 300px;
@@ -111,7 +107,7 @@
 
         .problem-box:hover {
             transform: translateY(-10px);
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
         
         .emoji {
@@ -129,32 +125,32 @@
         }
 
         .solution-card {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(12px);
-            border-radius: 25px;
+            background: #FFFFFF;
+            border-radius: 20px;
             padding: 30px;
-            border: 1px solid rgba(0, 255, 255, 0.4);
+            border: 1px solid #EAEAEA;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
 
         .solution-card:hover {
             transform: translateY(-12px);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
         }
 
         .time-block {
-            background-color: rgba(0, 255, 255, 0.1);
-            color: #F4F4F9;
+            background-color: #F0EAD6; /* Lightest Beige */
+            color: #5D4037;
             padding: 15px;
             margin: 10px 0;
-            border-radius: 15px;
+            border-radius: 10px;
             font-weight: 600;
-            border-left: 5px solid #00FFFF;
+            border-left: 5px solid #C0A062; /* Muted Gold */
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .time-block:hover {
-            background-color: rgba(0, 255, 255, 0.25);
+            background-color: #E9E1C9;
             transform: scale(1.03);
         }
         
@@ -177,35 +173,31 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
             color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
         }
 
-        .urgent-important { background: #E63946; } /* Red */
-        .not-urgent-important { background: #457B9D; } /* Blue */
-        .urgent-not-important { background: #FCA311; } /* Amber */
-        .not-urgent-not-important { background: #6B7280; } /* Grey */
+        .urgent-important { background: #A52A2A; } /* Brown */
+        .not-urgent-important { background: #556B2F; } /* OliveGreen */
+        .urgent-not-important { background: #C0A062; } /* Muted Gold */
+        .not-urgent-not-important { background: #A9A9A9; } /* DarkGray */
 
         .matrix-box:hover {
             transform: scale(1.08);
             z-index: 10;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
         .interactive-element {
-            background: rgba(0, 255, 255, 0.1);
+            background: #FFFFFF;
             padding: 20px;
             border-radius: 15px;
             margin: 15px 0;
-            border: 2px dashed #00FFFF;
+            border: 2px dashed #C0A062;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .interactive-element:hover {
-            background: rgba(0, 255, 255, 0.2);
+            background: #FFFBF0;
             transform: scale(1.05);
         }
 
@@ -220,34 +212,38 @@
 
         .control-btn {
             padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #00FFFF;
+            background: white;
+            border: 1px solid #5D4037;
             border-radius: 50px;
-            color: #00FFFF;
+            color: #5D4037;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
 
         .control-btn:hover {
-            background: #00FFFF;
-            color: #0f0c29;
+            background: #5D4037;
+            color: white;
             transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
         }
         
         .slide-counter {
             position: fixed;
             bottom: 30px;
             left: 30px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.7);
             padding: 10px 20px;
             border-radius: 25px;
-            backdrop-filter: blur(10px);
             font-weight: 600;
-            color: #FFFFFF;
+            color: #5D4037;
+        }
+        
+        .footer-credit {
+            position: absolute;
+            bottom: 40px;
+            font-size: 1rem;
+            color: #8B4513; /* SaddleBrown */
         }
     </style>
 </head>
@@ -261,6 +257,7 @@
             <div class="interactive-element" onclick="nextSlide()">
                 <p>👆 اضغط هنا عشان نبدأ الحفلة!</p>
             </div>
+            <p class="footer-credit">S.M team leader : Mohamed Ali</p>
         </div>
 
         <!-- Slide 2: Question -->
@@ -389,11 +386,11 @@
             <div class="solution-grid">
                 <div class="solution-card">
                     <h3>🔄 دورة حياة التاسك (Task Lifecycle)</h3>
-                    <div class="time-block" style="background-color: rgba(69, 123, 157, 0.4);">1. استلام الطلب (Brief) واضح من الأوبريشن</div>
-                    <div class="time-block" style="background-color: rgba(0, 255, 255, 0.2);">2. انشاء استراتيجي + جزء من البلان</div>
-                    <div class="time-block" style="background-color: rgba(252, 163, 17, 0.3);">3. إرسال الشغل للمراجعة (في وقت محدد)</div>
-                    <div class="time-block" style="background-color: rgba(230, 57, 70, 0.3);">4. استقبال التعديلات (مرة واحدة مجمعة)</div>
-                     <div class="time-block" style="background-color: rgba(144, 238, 144, 0.3);">5. التسليم النهائي والجدولة</div>
+                    <div class="time-block">1. استلام الطلب (Brief) واضح من الأوبريشن</div>
+                    <div class="time-block">2. انشاء استراتيجي + جزء من البلان</div>
+                    <div class="time-block">3. إرسال الشغل للمراجعة (في وقت محدد)</div>
+                    <div class="time-block">4. استقبال التعديلات (مرة واحدة مجمعة)</div>
+                     <div class="time-block">5. التسليم النهائي والجدولة</div>
                 </div>
                 <div class="solution-card">
                     <h3>💡 قواعد لراحة البال</h3>
@@ -424,7 +421,7 @@
         <!-- Slide 10: Closing -->
         <div class="slide">
             <h1>🎉 مبروك! الورشة خلصت! 🎉</h1>
-            <div class="solution-card" style="border-color: #00FFFF; border-width: 2px;">
+            <div class="solution-card" style="border-color: #C0A062; border-width: 2px;">
                 <h2>💪 الهدف مش إنك تشتغل أكتر...</h2>
                 <h2>🎯 الهدف إنك تشتغل صح وتعيش حياتك!</h2>
             </div>
