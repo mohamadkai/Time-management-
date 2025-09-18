@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورشة إدارة الوقت - شغل احترافي</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #F4F4F9;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            transform: translateY(20px);
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #FFFFFF;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        }
+
+        .slide h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #90EE90; /* Light Green */
+        }
+        
+        .slide h3 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #00FFFF; /* Cyan */
+        }
+
+        .slide p, .slide li {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #E0E0E0; /* Light Grey */
+        }
+        
+        .movie-quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #90EE90;
+            margin-top: -20px;
+            margin-bottom: 30px;
+        }
+
+        .problem-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            width: 100%;
+            max-width: 1300px;
+            flex-wrap: wrap;
+        }
+
+        .problem-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex: 1 1 280px;
+            max-width: 300px;
+            cursor: pointer;
+        }
+
+        .problem-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+        }
+        
+        .emoji {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .solution-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
+            padding: 30px;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .time-block {
+            background-color: rgba(0, 255, 255, 0.1);
+            color: #F4F4F9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 15px;
+            font-weight: 600;
+            border-left: 5px solid #00FFFF;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .time-block:hover {
+            background-color: rgba(0, 255, 255, 0.25);
+            transform: scale(1.03);
+        }
+        
+        .priority-matrix {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+        }
+
+        .matrix-box {
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .urgent-important { background: #E63946; } /* Red */
+        .not-urgent-important { background: #457B9D; } /* Blue */
+        .urgent-not-important { background: #FCA311; } /* Amber */
+        .not-urgent-not-important { background: #6B7280; } /* Grey */
+
+        .matrix-box:hover {
+            transform: scale(1.08);
+            z-index: 10;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .interactive-element {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 2px dashed #00FFFF;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #00FFFF;
+            border-radius: 50px;
+            color: #00FFFF;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #00FFFF;
+            color: #0f0c29;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+
+        <!-- Slide 1: Opening -->
+        <div class="slide active">
+            <h1>⏰ ورشة إدارة الوقت ⏰</h1>
+            <h2>شغل فاخر من الآخر!</h2>
+            <div class="interactive-element" onclick="nextSlide()">
+                <p>👆 اضغط هنا عشان نبدأ الحفلة!</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Question -->
+        <div class="slide">
+            <h2>🤔 سؤال عالماشي قبل ما نبدأ!</h2>
+            <div class="solution-card" style="max-width: 800px; text-align: center;">
+                <p style="font-size: 1.8rem; margin: 20px 0;">
+                    في المتوسط، بتخلص تاسكاتك في قد إيه؟<br><br>
+                    <strong>وإيه أكتر حاجة بتحسسك إنك تايه وبتعطلك؟</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Problems -->
+        <div class="slide">
+            <h2>أشهر لصوص الوقت في الشغل</h2>
+            <div class="problem-boxes">
+                <div class="problem-box">
+                    <span class="emoji">🧠</span>
+                    <h3>وهم تعدد المهام (Multitasking)</h3>
+                    <p>محاولة عمل كل شيء في نفس الوقت تعني أن لا شيء يتم بكفاءة. التركيز قوة!</p>
+                </div>
+                <div class="problem-box">
+                    <span class="emoji">🗣️</span>
+                    <h3>الكلام والحركة الكتير بلا هدف</h3>
+                    <p>قضاء وقت طويل في مناقشات جانبية وتحركات غير ضرورية بدلاً من التركيز على المهام الأساسية.</p>
+                </div>
+                <div class="problem-box">
+                    <span class="emoji">🎨</span>
+                    <h3>فخ الكمالية الزائدة</h3>
+                    <p>قضاء وقت أطول من اللازم على تفاصيل صغيرة لا تؤثر على النتيجة النهائية.</p>
+                </div>
+                <div class="problem-box">
+                    <span class="emoji">📂</span>
+                    <h3>فوضى التخطيط</h3>
+                    <p>البدء في العمل بدون خطة واضحة يجعلك تقضي وقتًا أطول في معرفة "ماذا أفعل الآن؟".</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: NEW - Social Media Focus -->
+        <div class="slide">
+            <h2>🎯 تركيزنا = شغل السوشيال ميديا الصح</h2>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <h3>📜 وضع الاستراتيجية</h3>
+                </div>
+                <div class="solution-card">
+                    <h3>🗓️ تخطيط المحتوى</h3>
+                </div>
+                <div class="solution-card">
+                    <h3>✍️ كتابة المحتوى والريفرانس</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Solution 1 - Batch Processing -->
+        <div class="slide">
+            <h2>🚀 الحل الأول: Batching أو "لمّ الشغلانة"</h2>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <h3>🔥 النظام الجديد</h3>
+                    <div class="time-block">الاحد : انشاء الاستراتيجي</div>
+                    <div class="time-block">الاتنين : انشاء جزء من البلان + مراجعة الاستراتيجي مع العميل</div>
+                    <div class="time-block">الثلاثاء : بعد مراجعة العميل واعتماده الافكار كتابة الجزء التاني من البلان</div>
+                    <div class="time-block">الاربعاء : كتابة الجزء الاخير من البلان</div>
+                    <div class="time-block">الخميس : البحث عن الانسبايريشن ورفع البلان للجرافيك</div>
+                </div>
+                <div class="solution-card">
+                    <h3>💡 طبق فورًا</h3>
+                    <div class="interactive-element" onclick="window.open('https://calendar.google.com', '_blank');">
+                        <p>👆 افتح Google Calendar<br>وحط "أيام الشغل" دي للأسبوع الجاي!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Priority Matrix -->
+        <div class="slide">
+            <h2>🎯 الحل الثاني: مصفوفة "المهم والأهم"</h2>
+             <p class="movie-quote">"مش كل قط يتقاله يا مشمش!"</p>
+            <div class="priority-matrix">
+                <div class="matrix-box urgent-important">
+                    <h3>🔥 مهم وعاجل</h3>
+                    <p>اعمله حالًا (زي بوست تريند لازم نركبه)</p>
+                </div>
+                <div class="matrix-box not-urgent-important">
+                    <h3>📅 مهم ومش عاجل</h3>
+                    <p>خطط له (زي خطة محتوى الشهر الجاي)</p>
+                </div>
+                <div class="matrix-box urgent-not-important">
+                    <h3>⚡ عاجل ومش مهم</h3>
+                    <p>فوضه لو ينفع (زي الرد على كومنتات عادية)</p>
+                </div>
+                <div class="matrix-box not-urgent-not-important">
+                    <h3>🚫 مش عاجل ومش مهم</h3>
+                    <p>كبر دماغك منه (زي تظبيط لون في لوجو قديم)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Pomodoro -->
+        <div class="slide">
+            <h2>🍅 الحل الثالث: تقنية الطماطم (Pomodoro)</h2>
+             <p class="movie-quote">"25 دقيقة تركيز... وبعدين، ولّعها!"</p>
+            <div class="solution-grid">
+                <div class="solution-card" style="text-align: center;">
+                    <h3>⏰ النظام</h3>
+                    <p style="font-size: 2rem; font-weight: bold; margin: 20px 0;">25 : 05</p>
+                    <p><strong>25 دقيقة شغل بتركيز كامل + 5 دقايق راحة.</strong></p>
+                </div>
+                <div class="solution-card">
+                    <h3>🎯 التطبيق على شغلنا</h3>
+                    <div class="time-block">جلسة طماطم لتحليل المنصات = تحليل 3 منصات</div>
+                    <div class="time-block">جلسة طماطم لتحليل SWOT + تحليل شخصية المشتري</div>
+                    <div class="time-block">جلسة طماطم لانشاء CONTENT DIRECTION</div>
+                    <div class="time-block">جلسة طماطم لانشاء content pillars</div>
+                    <div class="time-block">جلسة طماطم انشاء اول جزء من البلان</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: NEW - Operations Workflow -->
+        <div class="slide">
+            <h2>🤝 تنظيم الشغل مع الاوبريشن والعملاء</h2>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <h3>🔄 دورة حياة التاسك (Task Lifecycle)</h3>
+                    <div class="time-block" style="background-color: rgba(69, 123, 157, 0.4);">1. استلام الطلب (Brief) واضح من الأوبريشن</div>
+                    <div class="time-block" style="background-color: rgba(0, 255, 255, 0.2);">2. انشاء استراتيجي + جزء من البلان</div>
+                    <div class="time-block" style="background-color: rgba(252, 163, 17, 0.3);">3. إرسال الشغل للمراجعة (في وقت محدد)</div>
+                    <div class="time-block" style="background-color: rgba(230, 57, 70, 0.3);">4. استقبال التعديلات (مرة واحدة مجمعة)</div>
+                     <div class="time-block" style="background-color: rgba(144, 238, 144, 0.3);">5. التسليم النهائي والجدولة</div>
+                </div>
+                <div class="solution-card">
+                    <h3>💡 قواعد لراحة البال</h3>
+                    <p>✅ <strong>اجتماع أسبوعي (30 دقيقة):</strong> لمناقشة خطة الأسبوع وتفادي سوء الفهم.</p>
+                    <p>✅ <strong>مواعيد نهائية (Deadlines) مقدسة:</strong> عشان "مفيش حاجة اسمها معرفش"!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Implementation Plan -->
+        <div class="slide">
+            <h2>🚀 خطة التطبيق: من النهاردة!</h2>
+            <div class="solution-grid">
+                <div class="solution-card">
+                    <h3>⏰ الـ24 ساعة الجاية</h3>
+                    <p>✅ حط "أيام الشغل" (Batching) في الكالندر بتاعتك.</p>
+                    <p>✅ اختار أهم 3 مهام لبكرة باستخدام مصفوفة الأهمية.</p>
+                    <p>✅ جرب "جلسة طماطم" واحدة على أول تاسك.</p>
+                </div>
+                <div class="solution-card">
+                    <h3>📅 الأسبوع الأول</h3>
+                    <p>💪 التزم بنظام الـ Batching ليومين على الأقل.</p>
+                    <p>📊 في نهاية الأسبوع، شوف إيه اللي نفع معاك وإيه لأ.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Closing -->
+        <div class="slide">
+            <h1>🎉 مبروك! الورشة خلصت! 🎉</h1>
+            <div class="solution-card" style="border-color: #00FFFF; border-width: 2px;">
+                <h2>💪 الهدف مش إنك تشتغل أكتر...</h2>
+                <h2>🎯 الهدف إنك تشتغل صح وتعيش حياتك!</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
+    </div>
+
+    <div class="controls">
+        <button class="control-btn" onclick="previousSlide()">⬅️ السابق</button>
+        <button class="control-btn" onclick="nextSlide()">التالي ➡️</button>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+            });
+            slides[index].classList.add('active');
+            currentSlideIndex = index;
+            document.getElementById('currentSlide').textContent = index + 1;
+        }
+
+        function nextSlide() {
+            let nextIndex = currentSlideIndex + 1;
+            if (nextIndex >= totalSlides) {
+                nextIndex = 0; // Loop back to the first slide
+            }
+            showSlide(nextIndex);
+        }
+
+        function previousSlide() {
+            let prevIndex = currentSlideIndex - 1;
+            if (prevIndex < 0) {
+                prevIndex = totalSlides - 1; // Loop back to the last slide
+            }
+            showSlide(prevIndex);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+        
+        // Initialize first slide
+        showSlide(0);
+    </script>
+</body>
+</html>
